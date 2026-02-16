@@ -1,0 +1,101 @@
+// ================= STUDENT DATA =================
+const students = new Map([
+  [1, { name: "rohit", age: 22, courses: [".net", "Blazor"] }],
+  [2, { name: "mohit", age: 26, courses: ["c#", "sql", "sql", "physics"] }],
+  [3, { name: "abhi", age: 23, courses: ["AI", "Ar-Vr"] }],
+  [4, { name: "sami", age: 22, courses: ["javascript", "java"] }],
+]);
+
+// ================= COMMON HELPER =================
+const getStudent = (id) => students.get(id);
+
+// ================= FUNCTIONS =================
+
+// 1️⃣ Destructuring
+function getStudentInfo(id) {
+  const student = getStudent(id);
+  if (!student) return "Student not found";
+
+  const { name, age } = student;
+  return `Student name is ${name} and Age is ${age}`;
+}
+
+// 2️⃣ Spread Operator (single course)
+function addCourse(id, newCourse) {
+  const student = getStudent(id);
+  if (!student) return;
+
+  students.set(id, {
+    ...student,
+    courses: [...student.courses, newCourse],
+  });
+}
+
+// 3️⃣ Rest Parameter (multiple courses)
+function addCourses(id, ...courses) {
+  const student = getStudent(id);
+  if (!student) return;
+
+  students.set(id, {
+    ...student,
+    courses: [...student.courses, ...courses],
+  });
+}
+
+// 4️⃣ Set (unique courses)
+function getUniqueCourses(id) {
+  const student = getStudent(id);
+  if (!student) return new Set();
+
+  return new Set(student.courses);
+}
+
+// 5️⃣ Nullish Coalescing
+function checkStudent(id) {
+  return getStudent(id) ?? "Student ID does not exist";
+}
+
+// 6️⃣ String Manipulation
+function formatStudentInfo(id) {
+  const student = getStudent(id);
+  if (!student) return "Student not found";
+
+  const name = student.name.trim();
+  const courseList = student.courses.join(", ");
+
+  return `Student name is ${name}, Age is ${student.age}, Courses are ${courseList}`;
+}
+
+// ================= SWITCH CASE =================
+let value = 6;
+
+switch (value) {
+  case 1:
+    console.log(getStudentInfo(1));
+    break;
+
+  case 2:
+    addCourse(2, "math");
+    console.log(students);
+    break;
+
+  case 3:
+    addCourses(1, "c++", "java", "c");
+    console.log(students);
+    break;
+
+  case 4:
+    console.log(getUniqueCourses(2));
+    break;
+
+  case 5:
+    console.log(checkStudent(6));
+    break;
+
+  case 6:
+    console.log(formatStudentInfo(1));
+    break;
+
+  default:
+    console.log("Enter valid value");
+}
